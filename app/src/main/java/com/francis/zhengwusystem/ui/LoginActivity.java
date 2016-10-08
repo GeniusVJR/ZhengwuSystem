@@ -14,7 +14,7 @@ import android.transition.Explode;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import com.francis.zhengwusystem.MainActivity;
+import com.francis.zhengwusystem.people.ui.MainActivity;
 import com.francis.zhengwusystem.R;
 
 /**

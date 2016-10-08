@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:tools="http://schemas.android.com/tools"
+		tools:context=".main.widget.MainActivity">
+	<group android:checkableBehavior="single">
+		<item
+				android:id="@+id/navigation_item_news"
+				android:checked="true"
+				android:icon="@drawable/ic_assessment_white_24dp"
+				android:title="@string/navigation_news"/>
+
+		<item
+				android:id="@+id/navigation_item_suggestion"
+				android:icon="@drawable/ic_date_range_white_24dp"
+				android:title="@string/navigation_suggestion"/>
+
+		<item
+				android:id="@+id/navigation_item_personal_info"
+				android:icon="@drawable/ic_image_white_24dp"
+				android:title="@string/navigation_personal_info"/>
+
+		<item
+				android:id="@+id/navigation_item_setting"
+				android:icon="@drawable/ic_portrait_white_24dp"
+				android:title="@string/navigation_setting"/>
+	</group>
+</menu>
