@@ -2,6 +2,7 @@ package com.francis.zhengwusystem.ui;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,8 +17,13 @@ import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.Toast;
+import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.listener.SaveListener;
 import com.francis.zhengwusystem.R;
+import com.francis.zhengwusystem.model.User;
 import com.francis.zhengwusystem.utils.BlackInputFilter;
 import com.francis.zhengwusystem.utils.NumberAndLetterInputFilter;
 
@@ -32,10 +38,15 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
 	private CardView cvAdd;
 	private EditText et_username, et_password, et_repeatpassword;
 	private Button bt_go;
+	private RadioGroup mRadioGroup;
+	User user = new User();
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		//第一：默认初始化
+		Bmob.initialize(this, "8ad16864d4ca92c235df1b78980a5a7f");
+
 		setContentView(R.layout.activity_register);
 
 		fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -52,6 +63,21 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
 		et_password.setFilters(new NumberAndLetterInputFilter[]{ new NumberAndLetterInputFilter()});
 
 		bt_go = (Button) findViewById(R.id.bt_go);
+
+		mRadioGroup = (RadioGroup) findViewById(R.id.rg);
+
+		mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				if(checkedId == 0){
+					user.setIdentity(0);
+				}else {
+					user.setIdentity(1);
+				}
+
+			}
+		});
 
 		bt_go.setOnClickListener(this);
 
@@ -179,6 +205,25 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
 
 		if(password.equals(passwordRepeat)){
 
+
+			user.setUsername(userName);
+			user.setPassword(password);
+			user.signUp(RegistActivity.this, new SaveListener() {
+
+				@Override
+				public void onSuccess() {
+					Toast.makeText(RegistActivity.this, "注册成功！", Toast.LENGTH_SHORT).show();
+					Intent backLogin = new Intent(RegistActivity.this,
+							LoginActivity.class);
+					startActivity(backLogin);
+					RegistActivity.this.finish();
+				}
+
+				@Override
+				public void onFailure(int i, String s) {
+					Toast.makeText(RegistActivity.this, "注册失败！", Toast.LENGTH_SHORT).show();
+				}
+			});
 		}else{
 			Toast.makeText(this, "两次输入的密码不相同！", Toast.LENGTH_SHORT).show();
 		}

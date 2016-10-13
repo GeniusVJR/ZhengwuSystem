@@ -1,23 +1,28 @@
-package com.francis.zhengwusystem.people.ui;
+package com.francis.zhengwusystem.leader;
 
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.francis.zhengwusystem.R;
-import com.francis.zhengwusystem.people.presenter.MainPresenter;
-import com.francis.zhengwusystem.people.presenter.MainPresenterImpl;
-import com.francis.zhengwusystem.people.ui.fragment.NewsFragment;
-import com.francis.zhengwusystem.people.ui.fragment.PersonalInfoFragment;
-import com.francis.zhengwusystem.people.ui.fragment.SettingFragment;
-import com.francis.zhengwusystem.people.ui.fragment.SuggestionFragment;
-import com.francis.zhengwusystem.people.view.MainView;
+import com.francis.zhengwusystem.leader.presenter.MainPresenter;
+import com.francis.zhengwusystem.leader.presenter.MainPresenterImpl;
+import com.francis.zhengwusystem.leader.ui.fragment.NewsFragment;
+import com.francis.zhengwusystem.leader.ui.fragment.PersonalInfoFragment;
+import com.francis.zhengwusystem.leader.ui.fragment.SettingFragment;
+import com.francis.zhengwusystem.leader.ui.fragment.SuggestionFragment;
+import com.francis.zhengwusystem.leader.view.MainView;
 
-public class MainActivity extends AppCompatActivity implements MainView{
+/**
+ * @author taoc @ Zhihu Inc.
+ * @since 10-11-2016
+ */
+
+public class LeaderActivity extends AppCompatActivity implements MainView {
 
 	private DrawerLayout mDrawerLayout;
 	private ActionBarDrawerToggle mDrawerToggle;
@@ -28,9 +33,8 @@ public class MainActivity extends AppCompatActivity implements MainView{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_leader);
 		mToolbar = (Toolbar) findViewById(R.id.toolbar);
-		mToolbar.setTitle("政务新闻");
 		setSupportActionBar(mToolbar);
 
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -40,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements MainView{
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 		mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
 		setupDrawerContent(mNavigationView);
-
 		mMainPresenter = new MainPresenterImpl(this);
 
 		switch2News();
@@ -80,20 +83,21 @@ public class MainActivity extends AppCompatActivity implements MainView{
 	@Override
 	public void switch2News() {
 		getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, new NewsFragment()).commit();
-		mToolbar.setTitle("政务新闻");
+		mToolbar.setTitle("发布政务");
+
 	}
 
 	@Override
 	public void switch2Suggestion() {
+
 		getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, new SuggestionFragment()).commit();
-		mToolbar.setTitle("反馈意见");
+		mToolbar.setTitle("回复意见");
 	}
 
 	@Override
 	public void switch2PersonalInfo() {
-
 		getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, new PersonalInfoFragment()).commit();
-		mToolbar.setTitle("查看信息");
+		mToolbar.setTitle("查询信息");
 	}
 
 	@Override
@@ -101,6 +105,6 @@ public class MainActivity extends AppCompatActivity implements MainView{
 
 		getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, new SettingFragment()).commit();
 		mToolbar.setTitle("个人设置");
-	}
 
+	}
 }
